@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %} {% block body %}
+<div>
+  <h1>Listing: {{listing.title}}</h1>
+  {% if message %}<p>{{ message }} </p> {% endif %}
+  {% if listing.picture %}
+  <img
+    src="{{ listing.picture }}"
+    alt="picture"
+    style="max-width: 80%; max-height: 200px"/>
+  {% endif %}
+  <p>{{listing.description}}</p>
+  <h2>{{listing.actualbid}} Ft</h2>
+  {% if user.is_authenticated %}
+  <form action="{% url 'listing' listing.id %} " method="POST">
+    {% csrf_token %}
+    {{ bidform }}
+    <input type="submit" value="Place bid" />
+  </form>
+  {% endif %}
+  <h2>Details</h2>
+  <ul>
+    <li>Listed by: {{ listing.owner }}</li>
+    <li>Category: {{listing.categorytype}}</li>
+    <li>Startingbid: {{ listing.startingbid }}</li>
+  </ul>
+  <hr />
+</div>
+
+{% endblock %}
